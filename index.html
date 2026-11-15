@@ -4,63 +4,117 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Counme</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+      margin-top: 50px;
+    }
+  </style>
 </head>
 <body>
   <h1>🌍 Counme</h1>
   <p>Ülke-başkent bilgi oyunu!</p>
 
-  <h2 id="soru">Fransa'nın başkenti neresi?</h2>
+  <h2 id="soru"></h2>
   <input id="cevap" type="text" placeholder="Cevabını yaz...">
   <button onclick="kontrolEt()">Kontrol et</button>
   <p id="sonuc"></p>
   <p id="puan">Puan: 0</p>
+  <button onclick="yenidenBasla()">🔄 Yeniden başla</button>
 
-<script>
-  const sorular = [
-    { ulke: "Fransa", baskent: "Paris" },
-      { ulke: "Almanya", baskent: "Berlin" },
-      { ulke: "Japonya", baskent: "Tokyo" },
-      { ulke: "İtalya", baskent: "Roma" },
-      { ulke: "Mısır", baskent: "Kahire" }
+  <script>
+    const sorular = [
+      { ulke: "Fransa'nın", baskent: "Paris" },
+      { ulke: "Almanya'nın", baskent: "Berlin" },
+      { ulke: "Japonya'nın", baskent: "Tokyo" },
+      { ulke: "İtalya'nın", baskent: "Roma" },
+      { ulke: "Mısır'ın", baskent: "Kahire" },
+      { ulke: "İspanya'nın", baskent: "Madrid" },
+      { ulke: "İngiltere'nin", baskent: "Londra" },
+      { ulke: "Rusya'nın", baskent: "Moskova" },
+      { ulke: "Çin'in", baskent: "Pekin" },
+      { ulke: "Kanada'nın", baskent: "Ottawa" },
+      { ulke: "Arjantin'in", baskent: "Buenos Aires" },
+      { ulke: "Yunanistan'ın", baskent: "Atina" },
+      { ulke: "Portekiz'in", baskent: "Lizbon" },
+      { ulke: "Hollanda'nın", baskent: "Amsterdam" },
+      { ulke: "Belçika'nın", baskent: "Brüksel" },
+      { ulke: "Avusturya'nın", baskent: "Viyana" },
+      { ulke: "İsveç'in", baskent: "Stockholm" },
+      { ulke: "Norveç'in", baskent: "Oslo" },
+      { ulke: "Polonya'nın", baskent: "Varşova" },
+      { ulke: "Macaristan'ın", baskent: "Budapeşte" },
+      { ulke: "Hindistan'ın", baskent: "Yeni Delhi" },
+      { ulke: "Güney Kore'nin", baskent: "Seul" },
+      { ulke: "Avustralya'nın", baskent: "Kanberra" },
+      { ulke: "Meksika'nın", baskent: "Meksiko" },
+      { ulke: "İran'ın", baskent: "Tahran" },
+      { ulke: "Azerbaycan'ın", baskent: "Bakü" },
+      { ulke: "Gürcistan'ın", baskent: "Tiflis" },
+      { ulke: "Ukrayna'nın", baskent: "Kiev" },
+      { ulke: "Fas'ın", baskent: "Rabat" },
+      { ulke: "Türkiye'nin", baskent: "Ankara" }
     ];
 
-  let sira = 0;
-  let puan = 0;
+    let sira = 0;
+    let puan = 0;
 
-  function soruyuGoster() {
-    document.getElementById("soru").textContent = "Başkenti neresi: " + sorular[sira].ulke;
-  }
-
-  function kontrolEt() {
-    if (sira >= sorular.length) {
-      return;
+    function karistir() {
+      for (let i = sorular.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [sorular[i], sorular[j]] = [sorular[j], sorular[i]];
+      }
     }
 
-    let cevap = document.getElementById("cevap").value;
-    cevap = cevap.trim().toLocaleLowerCase("tr");
-    let dogruCevap = sorular[sira].baskent;
+    function sadelestir(yazi) {
+      return yazi.trim().toLocaleLowerCase("tr")
+        .replaceAll("ç", "c").replaceAll("ş", "s").replaceAll("ğ", "g")
+        .replaceAll("ü", "u").replaceAll("ö", "o").replaceAll("ı", "i");
+    }
 
-    if (cevap === dogruCevap.toLocaleLowerCase("tr")) {
+    function soruyuGoster() {
+      document.getElementById("soru").textContent = sorular[sira].ulke + " başkenti neresi?";
+    }
+
+    function kontrolEt() {
+      if (sira >= sorular.length) {
+        return;
+      }
+
+      let cevap = document.getElementById("cevap").value;
+      let dogruCevap = sorular[sira].baskent;
+
+      if (sadelestir(cevap) === sadelestir(dogruCevap)) {
         document.getElementById("sonuc").textContent = "✅ Doğru!";
         puan = puan + 1;
       } else {
         document.getElementById("sonuc").textContent = "❌ Yanlış, cevap " + dogruCevap + ".";
       }
 
+      document.getElementById("puan").textContent = "Puan: " + puan;
+      document.getElementById("cevap").value = "";
+      sira = sira + 1;
 
-    document.getElementById("puan").textContent= "Puan: " + puan;
-    document.getElementById("cevap").value = "";
-    sira = sira + 1;
-
-    if (sira < sorular.length) {
-      soruyuGoster();
-    } else {
-      document.getElementById("soru").textContent = "🎉 Oyun bitti! Puanın: " + puan + "/" + sorular.length;
+      if (sira < sorular.length) {
+        soruyuGoster();
+      } else {
+        document.getElementById("soru").textContent = "🎉 Oyun bitti! Puanın: " + puan + "/" + sorular.length;
+      }
     }
-  }
 
+    function yenidenBasla() {
+      sira = 0;
+      puan = 0;
+      karistir();
+      document.getElementById("puan").textContent = "Puan: 0";
+      document.getElementById("sonuc").textContent = "";
+      document.getElementById("cevap").value = "";
+      soruyuGoster();
+    }
+
+    karistir();
     soruyuGoster();
   </script>
 </body>
-</html>  
-    
+</html>
