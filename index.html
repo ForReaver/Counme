@@ -11,7 +11,19 @@
 
   <h2 id="soru">Fransa'nın başkenti neresi?</h2>
   <input id="cevap" type="text" placeholder="Cevabını yaz...">
-  <button>Kontrol et</button>
+  <button onclick="kontrolEt()">Kontrol et</button>
   <p id="sonuc"></p>
+<script>
+  function kontrolEt() {
+    let cevap = document.getElementById("cevap").value;
+    cevap = cevap.trim().toLocaleLowerCase("tr");
+
+    if (cevap === "paris") {
+      document.getElementById("sonuc").textContent = "✅ Doğru!";
+    } else {
+      document.getElementById("sonuc").testContent = "❌ Yanlış, cevap Paris.";
+    }
+  }
+</script>
 </body>
 </html>
