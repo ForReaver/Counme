@@ -9,10 +9,22 @@
       text-align: center;
       font-family: Arial, sans-serif;
       margin-top: 50px;
+      background-color: #e8f0fe;
     }
+    
+    <div class="kart">
+    .kart {
+      background-color: white;
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 30px;
+      border-radius: 15px;
+    }
+    
   </style>
 </head>
 <body>
+  <div class="kart">
   <h1>🌍 Counme</h1>
   <p>Ülke-başkent bilgi oyunu!</p>
 
@@ -22,6 +34,8 @@
   <p id="sonuc"></p>
   <p id="puan">Puan: 0</p>
   <button onclick="yenidenBasla()">🔄 Yeniden başla</button>
+
+  </div>
 
   <script>
     const sorular = [
@@ -57,9 +71,10 @@
       { ulke: "Türkiye'nin", baskent: "Ankara" }
     ];
 
-    const soruSayisi = 10
+    const soruSayisi = 10;
     let sira = 0;
     let puan = 0;
+    let seri = 0;
 
     function karistir() {
       for (let i = sorular.length - 1; i > 0; i--) {
@@ -88,9 +103,22 @@
 
       if (sadelestir(cevap) === sadelestir(dogruCevap)) {
         document.getElementById("sonuc").textContent = "✅ Doğru!";
+        document.getElementById("sonuc").style.color = "green";
         puan = puan + 1;
+        seri = seri + 1;
+        if (seri === 3) {
+          document.getElementById("sonuc").textContent = "✅ Doğru! 🔥 Üst üste 3 ";
+        } else if (seri === 5) {
+          document.getElementById("sonuc").textContent = "✅ Doğru! ⚡ Bu 5 etti, durdurulamıyorsun!";
+        } else if (seri === 10) {
+          document.getElementById("sonuc").textContent = "✅ Doğru! 👑 10/10, efsane!";
+        }
+          
       } else {
-        document.getElementById("sonuc").textContent = "❌ Yanlış, cevap " + dogruCevap + ".";
+        document.getElementById("sonuc").textContent = "💥 Diplomatik kriz, seri sıfırlandı, Yanlış, cevap " + dogruCevap + ".";
+        document.getElementById("sonuc").style.color = "red";
+        puan = puan - 1;
+        seri = 0;
       }
 
       document.getElementById("puan").textContent = "Puan: " + puan;
@@ -107,6 +135,7 @@
     function yenidenBasla() {
       sira = 0;
       puan = 0;
+      seri = 0;
       karistir();
       document.getElementById("puan").textContent = "Puan: 0";
       document.getElementById("sonuc").textContent = "";
