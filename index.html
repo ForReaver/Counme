@@ -13,17 +13,54 @@
   <input id="cevap" type="text" placeholder="Cevabını yaz...">
   <button onclick="kontrolEt()">Kontrol et</button>
   <p id="sonuc"></p>
+  <p id="puan">Puan: 0</p>
+
 <script>
+  const sorular = [
+    { ulke: "Fransa", baskent: "Paris" },
+      { ulke: "Almanya", baskent: "Berlin" },
+      { ulke: "Japonya", baskent: "Tokyo" },
+      { ulke: "İtalya", baskent: "Roma" },
+      { ulke: "Mısır", baskent: "Kahire" }
+    ];
+
+  let sira = 0;
+  let puan = 0;
+
+  function soruyuGoster() {
+    document.getElementById("soru").textContent = "Başkenti neresi: " + sorular[sira].ulke;
+  }
+
   function kontrolEt() {
+    if (sira >= sorular.length) {
+      return;
+    }
+
     let cevap = document.getElementById("cevap").value;
     cevap = cevap.trim().toLocaleLowerCase("tr");
+    let dogruCevap = sorular[sira].baskent;
 
-    if (cevap === "paris") {
-      document.getElementById("sonuc").textContent = "✅ Doğru!";
+    if (cevap === dogruCevap.toLocaleLowerCase("tr")) {
+        document.getElementById("sonuc").textContent = "✅ Doğru!";
+        puan = puan + 1;
+      } else {
+        document.getElementById("sonuc").textContent = "❌ Yanlış, cevap " + dogruCevap + ".";
+      }
+
+
+    document.getElementById("puan").textContent= "Puan: " + puan;
+    document.getElementById("cevap").value = "";
+    sira = sira + 1;
+
+    if (sira < sorular.length) {
+      soruyuGoster();
     } else {
-      document.getElementById("sonuc").testContent = "❌ Yanlış, cevap Paris.";
+      document.getElementById("soru").textContent = "🎉 Oyun bitti! Puanın: " + puan + "/" + sorular.length;
     }
   }
-</script>
+
+    soruyuGoster();
+  </script>
 </body>
-</html>
+</html>  
+    
