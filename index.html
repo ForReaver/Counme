@@ -57,6 +57,7 @@
       { ulke: "Türkiye'nin", baskent: "Ankara" }
     ];
 
+    const soruSayisi = 10
     let sira = 0;
     let puan = 0;
 
@@ -78,7 +79,7 @@
     }
 
     function kontrolEt() {
-      if (sira >= sorular.length) {
+      if (sira >= soruSayisi) {
         return;
       }
 
@@ -96,10 +97,10 @@
       document.getElementById("cevap").value = "";
       sira = sira + 1;
 
-      if (sira < sorular.length) {
+      if (sira < soruSayisi) {
         soruyuGoster();
       } else {
-        document.getElementById("soru").textContent = "🎉 Oyun bitti! Puanın: " + puan + "/" + sorular.length;
+        document.getElementById("soru").textContent = "🎉 Oyun bitti! Puanın: " + puan + "/" + soruSayisi;
       }
     }
 
@@ -112,7 +113,13 @@
       document.getElementById("cevap").value = "";
       soruyuGoster();
     }
-
+    
+    document.getElementById("cevap").addEventListener("keydown", function (olay) {
+      if (olay.key === "Enter") {
+        kontrolEt();
+      }
+    });
+    
     karistir();
     soruyuGoster();
   </script>
