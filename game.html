@@ -92,7 +92,7 @@
         soruyuGoster();
       } else {
         document.getElementById("soru").textContent = "🎉 Oyun bitti! Puanın: " + puan + "/" + soruSayisi;
-        document.getElementById("cevap").style.display = "none";
+        document.getElementById("cevap").style.display = "";
         document.getElementById("kontrol").style.display = "none";
         document.getElementById("puan").style.display = "none";
       }
@@ -106,6 +106,9 @@
       document.getElementById("puan").textContent = "Puan: 0";
       document.getElementById("sonuc").textContent = "";
       document.getElementById("cevap").value = "";
+      document.getElementById("cevap").style.display = "";
+      document.getElementById("kontrol").style.display = "";
+      document.getElementById("puan").style.display = "";
       soruyuGoster();
     }
     
