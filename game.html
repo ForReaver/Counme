@@ -60,7 +60,11 @@
       let cevap = document.getElementById("cevap").value;
       let dogruCevap = sorular[sira].baskent;
 
-      if (sadelestir(cevap) === sadelestir(dogruCevap)) {
+      let kabulEdilenler = [dogruCevap];
+      if (sorular[sira].diger) {
+        kabulEdilenler.push(...sorular[sira].diger);
+      }
+      if (kabulEdilenler.some(k => sadelestir(k) === sadelestir(cevap))) {
         document.getElementById("sonuc").textContent = "✅ Doğru!";
         document.getElementById("sonuc").style.color = "green";
         puan = puan + 1;
