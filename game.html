@@ -19,10 +19,16 @@
   <p id="sonuc"></p>
   <p id="puan">Puan: 0</p>
   <button onclick="yenidenBasla()">🔄 Yeniden başla</button>
-
+  <button onclick="location.href='index.html'">🏠 Menu</button>
   </div>
   <script src="ulkeler.js"></script>
   <script>
+    const kita = new URLSearchParams(location.search)get("kita");
+    if (kita) { 
+      const secilenler = sorular.filter(u => u.kita === kita);
+      sorukar.lenght = 0;
+      sorular.push(...secilenler);
+    }
   
     const soruSayisi = 10;
     let sira = 0;
