@@ -15,7 +15,7 @@
 
   <h2 id="soru"></h2>
   <input id="cevap" type="text" placeholder="Cevabını yaz...">
-  <button onclick="kontrolEt()">Kontrol et</button>
+  <button id="kontrol" onclick="kontrolEt()">Kontrol et</button>
   <p id="sonuc"></p>
   <p id="puan">Puan: 0</p>
   <button onclick="yenidenBasla()">🔄 Yeniden başla</button>
@@ -92,6 +92,9 @@
         soruyuGoster();
       } else {
         document.getElementById("soru").textContent = "🎉 Oyun bitti! Puanın: " + puan + "/" + soruSayisi;
+        document.getElementById("cevap").style.display = "none";
+        document.getElementById("kontrol").style.display = "none";
+        document.getElementById("puan").style.display = "none";
       }
     }
 
