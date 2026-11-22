@@ -26,7 +26,7 @@
     const kita = new URLSearchParams(location.search).get("kita");
     if (kita) { 
       const secilenler = sorular.filter(u => u.kita === kita);
-      sorular.lenght = 0;
+      sorular.length = 0;
       sorular.push(...secilenler);
     }
   
