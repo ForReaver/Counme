@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Counme</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+      margin-top: 50px;
+      background-color: #e8f0fe;
+    }
+    
+    .kart {
+      background-color: white;
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 30px;
+      border-radius: 15px;
+    }
+    button {
+      background-color: #2e86de;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #1b4f8a;
+    }
+
+    input { 
+      padding: 10px;
+      font-size: 16px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+    }
+
+    input:focus {
+      border-color: #2e86de;
+      outline: none;
+    }
+  
+  </style>
+</head>
+<body>
+  <div class="kart">
+  <h1>🌍 Counme</h1>
+  <p>Ülke-başkent bilgi oyunu!</p>
+
+  <h2 id="soru"></h2>
+  <input id="cevap" type="text" placeholder="Cevabını yaz...">
+  <button onclick="kontrolEt()">Kontrol et</button>
+  <p id="sonuc"></p>
+  <p id="puan">Puan: 0</p>
+  <button onclick="yenidenBasla()">🔄 Yeniden başla</button>
+
+  </div>
+  <script src="ulkeler.js"></script>
+  <script>
+  
+    const soruSayisi = 10;
+    let sira = 0;
+    let puan = 0;
+    let seri = 0;
+
+    function karistir() {
+      for (let i = sorular.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [sorular[i], sorular[j]] = [sorular[j], sorular[i]];
+      }
+    }
+
+    function sadelestir(yazi) {
+      return yazi.trim().toLocaleLowerCase("tr")
+        .replaceAll("ç", "c").replaceAll("ş", "s").replaceAll("ğ", "g")
+        .replaceAll("ü", "u").replaceAll("ö", "o").replaceAll("ı", "i");
+    }
+
+    function soruyuGoster() {
+      document.getElementById("soru").textContent = sorular[sira].ulke + " başkenti neresi?";
+    }
+
+    function kontrolEt() {
+      if (sira >= soruSayisi) {
+        return;
+      }
+
+      let cevap = document.getElementById("cevap").value;
+      let dogruCevap = sorular[sira].baskent;
+
+      if (sadelestir(cevap) === sadelestir(dogruCevap)) {
+        document.getElementById("sonuc").textContent = "✅ Doğru!";
+        document.getElementById("sonuc").style.color = "green";
+        puan = puan + 1;
+        seri = seri + 1;
+        if (seri === 3) {
+          document.getElementById("sonuc").textContent = "✅ Doğru! 🔥 Üst üste 3 ";
+        } else if (seri === 5) {
+          document.getElementById("sonuc").textContent = "✅ Doğru! ⚡ Bu 5 etti, durdurulamıyorsun!";
+        } else if (seri === 10) {
+          document.getElementById("sonuc").textContent = "✅ Doğru! 👑 10/10, efsane!";
+        }
+          
+      } else {
+        document.getElementById("sonuc").textContent = "💥 Diplomatik kriz, seri sıfırlandı, Yanlış, cevap " + dogruCevap + ".";
+        document.getElementById("sonuc").style.color = "red";
+        puan = puan - 1;
+        seri = 0;
+      }
+
+      document.getElementById("puan").textContent = "Puan: " + puan;
+      document.getElementById("cevap").value = "";
+      sira = sira + 1;
+
+      if (sira < soruSayisi) {
+        soruyuGoster();
+      } else {
+        document.getElementById("soru").textContent = "🎉 Oyun bitti! Puanın: " + puan + "/" + soruSayisi;
+      }
+    }
+
+    function yenidenBasla() {
+      sira = 0;
+      puan = 0;
+      seri = 0;
+      karistir();
+      document.getElementById("puan").textContent = "Puan: 0";
+      document.getElementById("sonuc").textContent = "";
+      document.getElementById("cevap").value = "";
+      soruyuGoster();
+    }
+    
+    document.getElementById("cevap").addEventListener("keydown", function (olay) {
+      if (olay.key === "Enter") {
+        kontrolEt();
+      }
+    });
+    
+    karistir();
+    soruyuGoster();
+  </script>
+</body>
+</html>
